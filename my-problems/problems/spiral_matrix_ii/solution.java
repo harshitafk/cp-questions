@@ -15,6 +15,7 @@ class Solution {
 	        	}
 	        	
 	        	if(totalCell >= num) {
+              
 	        	for(int i = firstRow+1; i <= lastRow; i++) {
 	        		for(int j = lastColumn; j<=lastColumn; j++) {
 	        			matrix[i][j] = num;
