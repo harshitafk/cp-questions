@@ -15,29 +15,30 @@
  */
 class BSTIterator {
 
-    ArrayDeque<TreeNode> stack;
+    private Deque<Integer> val;
     public BSTIterator(TreeNode root) {
-        stack= new ArrayDeque<>();
-        pushAll(root);
+        this.val = new ArrayDeque<>();
+      getValues(root);
     }
   
-    public void pushAll(TreeNode node){
-      while(node != null){
-        stack.addLast(node);
-        node = node.left;
-      }
-    }
+  private void getValues(TreeNode root){
+    if(root == null) return;
+    
+    getValues(root.left);
+    val.push(root.val);
+    getValues(root.right);
+  }
     
     public int next() {
-        TreeNode node = stack.removeLast();
-        pushAll(node.right);
-      
-      return node.val;
+        return val.pollLast();
     }
     
     public boolean hasNext() {
-        if(stack.isEmpty()) return false;
-      else return true;
+       if(val.peek() == null){
+         return false;
+       }
+      
+      return true;
     }
 }
 
