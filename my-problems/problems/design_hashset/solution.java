@@ -1,31 +1,24 @@
 class MyHashSet {
 
-    long[] db = null;
+    private long[] set;
     public MyHashSet() {
-        this.db = new long[1000001];
-        this.db[0] = -1;
+        this.set = new long[1000001];
     }
     
     public void add(int key) {
-       db[key] = key;
+        set[key] = key+1;
     }
     
     public void remove(int key) {
-        if(key == 0){
-            db[0] = -1;
-        }
-        db[key] = -1;
+        set[key] = 0;
     }
     
     public boolean contains(int key) {
-        
-        if(key == 0 && db[key] != -1){
-            return true;
-        }else if(db[key] == key){
-            return true;
+        if(set[key] == 0){
+          return false;
+        }else{
+          return true;
         }
-        
-        return false;
     }
 }
 
