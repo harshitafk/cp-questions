@@ -1,42 +1,42 @@
 public class Codec {
 
-   Map<String, String> db = new HashMap<>();
-    
-	private String getCode(String[] urlArray) {
-		
-		int c = 65;
-		StringBuilder builder  = new StringBuilder();
-		builder.append("http://myurl/");
-		
-		for(String string : urlArray) {
-			if(!string.isEmpty() || !string.isEmpty()) {
-				builder.append(string.charAt(0)).append(c).append((char)c);
-			}
-			if(c == 90) c = 97;
-			else if(c == 122) c = 65;
-			
-			c++;
-		}
-		return builder.toString();
-	}
-	
+    private Map<String,String> map = new HashMap<>();
+    // Encodes a URL to a shortened URL.
     public String encode(String longUrl) {
-    	
-    	if(db.containsKey(longUrl)) return db.get(longUrl);
-    	
-    	String[] urlArray = longUrl.split("/");
-    	String code = getCode(urlArray);
-    	
-    	db.put(code, longUrl);
-    	db.put(longUrl, code);
-    	
-    	return code;
+      
+      if(map.containsKey(longUrl)) return map.get(longUrl);
+      
+        String[] urlArr = longUrl.split("/");
+       String code = getCode(urlArr);
+       map.put(code,longUrl);
+       map.put(longUrl,code);
+      
+      return code;
     }
 
+    // Decodes a shortened URL to its original URL.
     public String decode(String shortUrl) {
-    	
-    	return db.get(shortUrl);
+        return map.get(shortUrl);
     }
+  
+  
+  private String getCode(String[] array){
+    
+    char c = 65;
+    StringBuilder builder = new StringBuilder();
+    builder.append("https://tinyurl.com/");
+    for(String a : array){
+      if(!a.isEmpty()){
+          builder.append(a.charAt(0)).append(c).append("X");
+      } 
+        c++;
+      
+      if(c == 90) c = 97;
+      else if(c == 122) c = 65;
+    }
+    
+    return builder.toString();
+  }
 }
 
 // Your Codec object will be instantiated and called as such:
