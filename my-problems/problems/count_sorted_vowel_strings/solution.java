@@ -1,8 +1,7 @@
 class Solution {
     public int countVowelStrings(int n) {
       int[] dp = new int[5];
-      
-       int sum = 1;
+      int sum = 0;
       for(int i = 0; i <= n; i++){
         dp[4] = 1;
         for(int j =3; j >= 0; j--){
