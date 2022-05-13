@@ -26,19 +26,19 @@ class Solution {
       
       if(root == null) return null;
       
-        if(root.left != null){
-          if(root.right != null){
-            root.left.next = root.right;
-          }else{
-            Node node = findNext(root.next);
-            root.left.next = node;
-          }
+      if(root.left != null){
+        if(root.right != null){
+          root.left.next = root.right;
+        }else{
+           Node node = findNext(root.next);
+           root.left.next = node;
         }
-          
-          if(root.right != null){
-            Node node = findNext(root.next);
-            root.right.next = node;
-          }
+      } 
+      
+      if(root.right != null){
+        Node node = findNext(root.next);
+        root.right.next = node;
+      }
       
       connect(root.right);
       connect(root.left);
@@ -46,16 +46,17 @@ class Solution {
       return root;
     }
   
-  private Node findNext(Node root){
-    while(root != null){
-      if(root.left != null){
-        return root.left;
-      }else if(root.right != null){
-        return root.right;
+  private Node findNext(Node node){
+    while(node != null){
+      if(node.left != null){
+       return node.left;
+      }else if(node.right != null){
+       return node.right;
       }
       
-      root = root.next;
+      node = node.next;
     }
-    return root;
+    
+    return node;
   }
 }
