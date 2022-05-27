@@ -1,20 +1,45 @@
 class Solution {
     public int[] dailyTemperatures(int[] temperatures) {
-        Stack<Integer> stack = new Stack<>();
-       int[] ans = new int[temperatures.length];
-      
-      for(int i = temperatures.length - 1; i >= 0; i--){
+        Stack<Element> stack = new Stack<>();
         
-       while(!stack.isEmpty() && temperatures[i] >= temperatures[stack.peek()]){
-          stack.pop();
+        int[] ans = new int[temperatures.length];
+        for(int i = 0; i < temperatures.length; i++){
+            
+            if(i == 0){
+                stack.push(new Element(temperatures[i],i));
+            }else{
+                
+                if(!stack.isEmpty()){
+                    int n = stack.peek().val;
+                      while(temperatures[i] > n){
+                    
+                    Element e = stack.pop();
+                    ans[e.pos] = i - e.pos;
+                    
+                          if(stack.isEmpty()){
+                              break;
+                          }else{
+                              n = stack.peek().val;
+                          }
+                }
+                }
+              
+                
+                stack.push(new Element(temperatures[i],i));
+            }
         }
         
-        if(!stack.isEmpty()){
-          ans[i] = stack.peek() - i;
-        }
-        
-        stack.push(i);
-      }
-      return ans;
+        return ans;
     }
+    
+}
+
+class Element{
+        public int val;
+        public int pos;
+        
+        public Element(int val, int pos){
+            this.val = val;
+            this.pos = pos;
+        }
 }
