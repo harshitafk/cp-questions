@@ -1,39 +1,45 @@
 class Solution {
     public String longestPalindrome(String s) {
+         int strLen = 2 * s.length() + 3;
+        char[] sChars = new char[strLen];
       
-      int dp[][] = new int[s.length()][s.length()];
-      
-      for(int i = 0; i < s.length(); i++){
-        dp[i][i] = 1;
-      }
-      int start = 0,maxLength = 1;
-      for(int i = 0; i < s.length()-1; ++i){
-        if(s.charAt(i) == s.charAt(i+1)){
-          dp[i][i+1] = 1;
-          start = i;
-          maxLength = 2;
-        }else{
-          dp[i][i+1] = 0;
+        sChars[0] = '@';
+        sChars[strLen - 1] = '$';
+        int t = 1;
+        for (char c : s.toCharArray()) {
+            sChars[t++] = '#';
+            sChars[t++] = c;
         }
-      }
-      
-      
-     for (int m = 3; m <= s.length(); m++) {
-        for(int i = 0; i < s.length() - m + 1; i++){
-          int j = i + m - 1;
-          
-          if(s.charAt(i) == s.charAt(j) && dp[i+1][j-1] == 1){
-            dp[i][j] = 1;
-              if(m > maxLength){
-                start = i;
-                maxLength = m;
-              }
-          }else{
-            dp[i][j] = 0;
-          }
+        sChars[t] = '#';
+
+        int maxLen = 0;
+        int start = 0;
+        int maxRight = 0;
+        int center = 0;
+        int[] p = new int[strLen]; // i's radius, which not includes i
+        for (int i = 1; i < strLen - 1; i++) {
+            if (i < maxRight) {
+                p[i] = Math.min(maxRight - i, p[2 * center - i]);
+            }
+
+            // expand center
+            while (sChars[i + p[i] + 1] == sChars[i - p[i] - 1]) {
+                p[i]++;
+            }
+
+            // update center and its bound
+            if (i + p[i] > maxRight) {
+                center = i;
+                maxRight = i + p[i];
+            }
+
+            // update ans
+            if (p[i] > maxLen) {
+                start = (i - p[i] - 1) / 2;
+                maxLen = p[i];
+            }
         }
-      }
-      
-      return s.substring(start, start + maxLength);
+
+        return s.substring(start, start + maxLen);
     }
 }
