@@ -1,22 +1,20 @@
 class Solution {
     public int numDecodings(String s) {
-        int n = s.length();
-      Integer[] dp = new Integer[n];
-      return s.length() == 0 ? 0 : findWays(n,0,s,dp);
+        
+        Integer[] mem=new Integer[s.length()];
+        return decode(s, 0,mem);
     }
-  
-  private int findWays(int n, int i, String s, Integer[] dp){
     
-    if(n == i) return 1;
-    if(s.charAt(i) == '0') return 0;
-    if(dp[i] != null) return dp[i];
-    
-    int res = findWays(n,i+1,s,dp);
-    
-    if(i < n-1 && (s.charAt(i) == '1' || (s.charAt(i) == '2' && s.charAt(i + 1) < '7'))){
-       res += findWays(n,i+2,s,dp);
-  }
-    
-  return dp[i] = res;
-  }
+    public int decode(String s, int p,Integer[] mem){
+        if(p == s.length()) return 1;
+        if(s.charAt(p) == '0') return 0;
+        if(mem[p]!=null) return mem[p];
+        int res = decode(s,p+1,mem);
+        
+        if((p < s.length()-1) && (s.charAt(p) == '1' || s.charAt(p) == '2' && s.charAt(p+1) < '7')){
+            res += decode(s,p+2,mem);
+        }
+        
+        return mem[p] = res;
+    }
 }
