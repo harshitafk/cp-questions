@@ -14,28 +14,26 @@
  * }
  */
 class Solution {
+    
+    Map<Integer,Integer> map = new HashMap<>();int prePrefix = 0;
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        Map<Integer,Integer> map = new HashMap<>();
+       // map = new HashMap<>()
         for(int i = 0; i < inorder.length; i++){
-          map.put(inorder[i],i);
+            map.put(inorder[i],i);
         }
-      
-      return splitTree(preorder,map,0,0,inorder.length-1);
-    }
-  
-  public TreeNode splitTree(int[] preorder, Map<Integer,Integer> inOrderMap, int prePointer, int inOrderLeft, int inOrderRight){
-    int preOrderVal = preorder[prePointer], inOrderValuePointer = inOrderMap.get(preOrderVal);
-    TreeNode node = new TreeNode(preOrderVal);
-    if(inOrderValuePointer > inOrderLeft){
-      node.left = splitTree(preorder,inOrderMap,prePointer+1,inOrderLeft,inOrderValuePointer-1);
+        
+        return build(preorder,0,preorder.length-1);
     }
     
-    if(inOrderValuePointer < inOrderRight){
-      node.right = splitTree(preorder,inOrderMap,prePointer+inOrderValuePointer-inOrderLeft+1,inOrderValuePointer+1,inOrderRight);
+    public TreeNode build(int[] preorder,int left, int right){
+        if(left > right) return null;
+        
+        int rootValue = preorder[prePrefix++];
+        TreeNode node = new TreeNode(rootValue);
+        
+        node.left = build(preorder,left,map.get(rootValue)-1);
+        node.right =  build(preorder,map.get(rootValue)+1,right);
+        
+        return node;
     }
-    
-    return node;
-  }
-  
-  
 }
