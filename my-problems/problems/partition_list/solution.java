@@ -10,28 +10,28 @@
  */
 class Solution {
     public ListNode partition(ListNode head, int x) {
-      
-      if(head == null) return head;
-      
-      ListNode part1 = new ListNode(0);
-      ListNode part2 = new ListNode(0);
-      ListNode temp1 = part1,temp2 = part2;
-      ListNode curr = head;
-      
-      while(curr != null){
-        if(curr.val >= x){
-          temp2.next = curr;
-          temp2 = curr;
-        }else{
-          temp1.next = curr;
-          temp1 = curr;
+        ListNode part1 = new ListNode(0);
+        ListNode part2 = new ListNode(0);
+        
+        ListNode temp1 = part1;
+        ListNode temp2 = part2;
+        
+        ListNode curr = head;
+        
+        while(curr != null){
+            if(curr.val >= x){
+                temp2.next = curr;
+                temp2 = curr;
+            }else{
+                temp1.next = curr;
+                temp1 = curr;
+            }
+            curr = curr.next;
         }
-        curr = curr.next;
-      }
-      
-      temp1.next = part2.next;
-      temp2.next = null;
-      return part1.next;
-      
+        
+        temp1.next = part2.next;
+        temp2.next = null;
+        
+        return part1.next;
     }
 }
