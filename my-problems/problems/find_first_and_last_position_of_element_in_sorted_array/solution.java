@@ -1,45 +1,51 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
-       int[] result = new int[2];
-		result[0] = findFirst(nums, target, 0, nums.length - 1, -1);
-
-		result[1] = findLast(nums, target, 0, nums.length - 1, -1);
-
-		return result;
-	}
-
-	private int findLast(int[] nums, int target, int start, int end, int result) {
-		while (start <= end) {
-			int mid = start + (end - start) / 2;
-
-			if (nums[mid] <= target) {
-				start = mid + 1;
-			} else {
-				end = mid - 1;
-			}
-
-			if (nums[mid] == target) {
-				result = mid;
-			}
-		}
-		return result;
-	}
-
-	private int findFirst(int[] nums, int target, int start, int end, int result) {
-		while (start <= end) {
-			int mid = start + (end - start) / 2;
-
-			if (nums[mid] >= target) {
-				end = mid - 1;
-			} else {
-				start = mid + 1;
-			}
-			
-			if (nums[mid] == target) {
-				result = mid;
-			}
-		}
-
-		return result;
+        int[] r = new int[2];
+        
+        r[0] = findFirst(nums,target);
+        r[1] = findLast(nums,target);
+        
+        return r;
+    }
+    
+    private int findFirst(int[] nums, int target){
+        int l = 0, r = nums.length-1, result = -1;
+        
+        while(l <= r){
+            
+            int mid = l + (r - l)/2;
+            
+            if(nums[mid] == target){
+             result = mid;
+             r = mid-1;
+            }else if(nums[mid] > target){
+                r = mid - 1;
+            }else{
+                l = mid + 1;
+            }
+            
+        }
+        
+        return result;
+    }
+    
+    private int findLast(int[] nums, int target){
+        int l = 0, r = nums.length-1, result = -1;
+        
+        while(l <= r){
+            int mid = l + (r - l)/2;
+            
+            if(nums[mid] == target){
+             result = mid;
+             l = mid+1;
+            }else if(nums[mid] > target){
+                r = mid - 1;
+            }else{
+                l = mid + 1;
+            }
+        }
+        
+        return result;
+        
     }
 }
