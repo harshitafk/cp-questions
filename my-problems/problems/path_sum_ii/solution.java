@@ -15,26 +15,29 @@
  */
 class Solution {
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
-        List<List<Integer>> list = new ArrayList<>();
-      
-      pathSumCalculate(list,new ArrayList<>(),targetSum,root);
-      
-      return list;
+        List<List<Integer>> ll = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        
+        findsum(ll,list,root,targetSum);
+     
+        return ll;
     }
-  
-  public void pathSumCalculate(List<List<Integer>> list,List<Integer> addNode,int targetSum,TreeNode root){
     
-    if(root == null) return;
-    
-    addNode.add(root.val);
-    
-    if(root.left == null && root.right == null && (targetSum == root.val)){
-      list.add(new ArrayList<>(addNode));
-    }else{
-      pathSumCalculate(list,addNode,targetSum-root.val,root.left);
-      pathSumCalculate(list,addNode,targetSum-root.val,root.right);
+    private void findsum(List<List<Integer>> ll, List<Integer> list, TreeNode root, int targetSum){
+        
+        if(root == null) return;
+        
+        list.add(root.val);
+        
+        if(root.left == null && root.right == null && targetSum == root.val){
+            ll.add(new ArrayList<>(list));
+        }else{
+            findsum(ll,list,root.left,targetSum - root.val);
+            findsum(ll,list,root.right,targetSum - root.val);
+        }
+        
+        list.remove(list.size()-1);
+        
+        
     }
-      addNode.remove(addNode.size()-1); 
-       
-  }
-} 
+}
