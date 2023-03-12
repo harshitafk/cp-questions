@@ -27,22 +27,23 @@ class Solution {
     public TreeNode sortedListToBST(ListNode head) {
         return findBST(head,null);
     }
-  
-  public TreeNode findBST(ListNode head,ListNode tail){
-    ListNode slow = head;
-    ListNode fast = head;
-    
-    if(head == tail) return null;
-    
-    while(fast != tail && fast.next != tail){
-      slow = slow.next;
-      fast = fast.next.next;
-    }
-    
-    TreeNode node = new TreeNode(slow.val);
-    node.left = findBST(head,slow);
-    node.right = findBST(slow.next,tail);
-    
-    return node;
-  }
+
+    public TreeNode findBST(ListNode head, ListNode tail){
+        ListNode slow = head;
+        ListNode fast = head;
+
+        if(head == tail) return null;
+
+        while(fast != tail && fast.next != tail){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        TreeNode node = new TreeNode(slow.val);
+
+        node.left = findBST(head, slow);
+        node.right = findBST(slow.next,tail);
+
+        return node;
+    } 
 }
